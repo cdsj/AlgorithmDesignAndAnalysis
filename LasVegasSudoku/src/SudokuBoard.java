@@ -9,12 +9,14 @@ public class SudokuBoard
 	private int boardSize;
 	private Integer[][] sudokuBoard;
 	private Collection<MarkerObject> allPlacementsCollection;
+	private Collection<MarkerObject> validPlacesCollection;
 	private int indicator=0;
 	
 	public SudokuBoard(int boardSize){
 		this.boardSize= boardSize;
 		this.allPlacementsCollection = new ArrayList<MarkerObject>();
 		this.sudokuBoard = new Integer[boardSize*boardSize][boardSize*boardSize];
+		this.validPlacesCollection = new ArrayList<MarkerObject>();
 	}
 	
 	public boolean isValidPlacement(MarkerObject marker){
@@ -39,6 +41,21 @@ public class SudokuBoard
 		return true;
 	}
 	
+	public Collection<MarkerObject> getValidCoordinatesForQuadrant(int value,int xVal,int yVal,int boardSize){
+		validPlacesCollection.clear();
+		for (int i = xVal*boardSize; i < (boardSize)+xVal*boardSize; i++)
+		{
+			for (int j = yVal*boardSize; j < (boardSize)+yVal*boardSize; j++)
+			{
+				MarkerObject m = new MarkerObject(value, i, j);
+				if(isValidPlacement(m)){
+					validPlacesCollection.add(m);
+				}
+			}
+		}
+		return validPlacesCollection;
+	}
+	
 	public boolean isBoardFilled()
 	{
 		if(allPlacementsCollection.size()>=(Math.pow(boardSize, 4)))
@@ -57,11 +74,11 @@ public class SudokuBoard
 		for (Iterator<MarkerObject>  marks = allPlacementsCollection.iterator(); marks.hasNext();)
 		{
 			MarkerObject mark = (MarkerObject) marks.next();
-			sudokuBoard[mark.getxVal()][mark.getyVal()]=mark.getValue();
+			sudokuBoard[mark.getyVal()][mark.getxVal()]=mark.getValue();
 		}
 		
 		// Print the closest soultion.
-		if(allPlacementsCollection.size()>indicator){
+		/*if(allPlacementsCollection.size()>indicator){
 			indicator=allPlacementsCollection.size();
 			System.out.println();
 			printBoard();
@@ -69,12 +86,12 @@ public class SudokuBoard
 			System.out.println("Placed numbers: "+indicator);
 			System.out.println("------------------");
 			
-		}
+		}*/
 	}
 	
 	public boolean isSlotEmpty(int xCoord, int yCoord)
 	{
-		if(sudokuBoard[xCoord][yCoord]!=0){
+		if(sudokuBoard[yCoord][xCoord]!=0){
 			return false;
 		}
 		else
