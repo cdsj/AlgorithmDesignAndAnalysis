@@ -1,17 +1,23 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
-
-public class PureLasVegas
+/*
+ * The algorithm randomizes coordinates for one group of markers (based on a specific value) at a time and checks if all markers in the group can be placed
+ * The algorithm starts over if the picked coordinates are occupied or if the slot is invalid for the specific value
+ */
+public class LasVegasGS
 {
 	private SudokuBoard sb;
 	private int boardSize;
 	private MarkerObject marker;
 	private Collection<MarkerObject> markersToPlace;
 	private Collection<MarkerObject> markerCollection;
+	private Date startTime;
+	private Date endTime;
 	
-	public PureLasVegas(int boardSize, SudokuBoard sb){
+	public LasVegasGS(int boardSize, SudokuBoard sb){
 		this.boardSize = boardSize;
 		this.sb = sb;
 		this.markerCollection = new ArrayList<MarkerObject>();
@@ -22,7 +28,7 @@ public class PureLasVegas
 	 * in an invalid slot, it fails and starts over from the beginning 
 	 */
 	public void solveSudoku(){
-		
+		startTime = new Date();
 		boolean done = false;
 		boolean restart=false;
 		while(!done)
@@ -56,6 +62,8 @@ public class PureLasVegas
 				System.out.println("DONE");
 			}
 		}
+		endTime = new Date();
+		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
 	}
 	
 	@SuppressWarnings("null")
