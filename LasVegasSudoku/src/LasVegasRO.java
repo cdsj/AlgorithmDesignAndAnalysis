@@ -17,6 +17,7 @@ public class LasVegasRO
 	private MarkerObject marker;
 	private Collection<MarkerObject> markersToPlace;
 	private Collection<MarkerObject> markerCollection;
+	private Long numberOfRestarts;
 	private Date startTime;
 	private Date endTime;
 	
@@ -24,6 +25,7 @@ public class LasVegasRO
 		this.boardSize = boardSize;
 		this.sb = sb;
 		this.markerCollection = new ArrayList<MarkerObject>();
+		this.numberOfRestarts=(long)0;
 	}
 
 	/*
@@ -72,6 +74,7 @@ public class LasVegasRO
 		}
 		endTime = new Date();
 		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
+		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 	}
 	
 	@SuppressWarnings("null")

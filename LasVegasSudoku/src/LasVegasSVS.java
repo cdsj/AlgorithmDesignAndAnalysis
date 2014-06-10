@@ -13,6 +13,7 @@ public class LasVegasSVS
 	private MarkerObject marker;
 	private Collection<MarkerObject> markersToPlace;
 	private Collection<MarkerObject> markerCollection;
+	private Long numberOfRestarts;
 	private Date startTime;
 	private Date endTime;
 	
@@ -20,6 +21,7 @@ public class LasVegasSVS
 		this.boardSize = boardSize;
 		this.sb = sb;
 		this.markerCollection = new ArrayList<MarkerObject>();
+		this.numberOfRestarts=(long) 0;
 	}
 
 	/*
@@ -57,6 +59,7 @@ public class LasVegasSVS
 				
 				if(restart)
 				{
+					numberOfRestarts++;
 					restart=false;
 					break;
 				}
@@ -64,11 +67,14 @@ public class LasVegasSVS
 			if(sb.isBoardFilled())
 			{
 				done=true;
-				System.out.println("DONE");
 			}
 		}
 		endTime = new Date();
+		sb.printBoard();
+		System.out.println("---------------------");
+		System.out.println("DONE");
 		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
+		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 	}
 	
 	@SuppressWarnings("null")

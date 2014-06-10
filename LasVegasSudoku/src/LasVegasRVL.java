@@ -1,8 +1,6 @@
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Random;
 
 /*
  *	Las Vegas Algorithm Randomize among Valid Locations
@@ -14,8 +12,6 @@ public class LasVegasRVL
 	private SudokuBoard sb;
 	private int boardSize;
 	private MarkerObject marker;
-	private Collection<MarkerObject> markersToPlace;
-	private Collection<MarkerObject> markerCollection;
 	private Collection<MarkerObject> validLocations;
 	private Date startTime;
 	private Date endTime;
@@ -24,7 +20,6 @@ public class LasVegasRVL
 	public LasVegasRVL(int boardSize, SudokuBoard sb){
 		this.boardSize = boardSize;
 		this.sb = sb;
-		this.markerCollection = new ArrayList<MarkerObject>();
 		this.numberOfRestarts=(long) 0;
 	}
 
@@ -36,42 +31,42 @@ public class LasVegasRVL
 		{
 			sb.clearPlacedMarkersCollection();
 			sb.clearArray();
+			//addCoordinates();
 			for (int valueToPlace = 1; valueToPlace < boardSize*boardSize+1; valueToPlace++)
 			{
 				for (int y = 0; y < boardSize; y++)
 				{
 					for (int x = 0; x < boardSize; x++)
 					{
-						validLocations = sb.getValidCoordinatesForQuadrant(valueToPlace, x, y, boardSize);
-						
-						for (Iterator<MarkerObject> iterator = validLocations.iterator(); iterator
-								.hasNext();)
-						{
-							MarkerObject mark = (MarkerObject) iterator.next();
-						}
-						
-						if(validLocations.size()==0)
-						{
-							restart=true;
-							break;
-							
+						if(sb.isValueNeededInQuadrant(valueToPlace, x, y, boardSize)){
+							validLocations = sb.getValidCoordinatesForQuadrant(valueToPlace, x, y, boardSize);
+							if(validLocations.size()==0)
+							{
+								restart=true;
+								break;
+							}
+							else
+							{
+								marker = pickRandomValidLocation(validLocations);
+								sb.placeMarker(marker);
+							}
 						}
 						else
 						{
-							marker = pickRandomValidLocation(validLocations);
-							sb.placeMarker(marker);
+							System.out.println("Not needed for quadrant: "+x+" , "+y);
 						}
-
 					}
 				}
 				
 				if(restart)
 				{
 					numberOfRestarts++;
+					/*
 					if(numberOfRestarts%100000==0)
 					{
-						//em.out.println("Number of Restarts: "+numberOfRestarts);
+						system.out.println("Number of Restarts: "+numberOfRestarts);
 					}
+					*/
 					restart=false;
 					break;
 				}
@@ -79,12 +74,25 @@ public class LasVegasRVL
 			if(sb.isBoardFilled())
 			{
 				done=true;
-				System.out.println("DONE");
-				System.out.println("Total Number of Restarts: "+numberOfRestarts);
 			}
 		}
 		endTime = new Date();
+		sb.printBoard();
+		System.out.println("---------------------");
+		System.out.println("DONE");
+		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
+	}
+	
+	public void addCoordinates(){
+		sb.addLocationsToSudokuBoard(6, 2, 0);
+		sb.addLocationsToSudokuBoard(9, 4, 0);
+		sb.addLocationsToSudokuBoard(2, 6, 0);
+		sb.addLocationsToSudokuBoard(1, 0, 1);
+		sb.addLocationsToSudokuBoard(6, 3, 1);
+		sb.addLocationsToSudokuBoard(8, 5, 1);
+		sb.addLocationsToSudokuBoard(8, 1, 2);
+		sb.addLocationsToSudokuBoard(1, 7, 2);
 	}
 	
 	@SuppressWarnings("null")

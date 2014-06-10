@@ -56,6 +56,20 @@ public class SudokuBoard
 		return validPlacesCollection;
 	}
 	
+	public boolean isValueNeededInQuadrant(int value,int xVal,int yVal,int boardSize)
+	{
+		for (int i = xVal*boardSize; i < (boardSize)+xVal*boardSize; i++)
+		{
+			for (int j = yVal*boardSize; j < (boardSize)+yVal*boardSize; j++)
+			{
+				if(sudokuBoard[j][i]==value){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	public boolean isBoardFilled()
 	{
 		if(allPlacementsCollection.size()>=(Math.pow(boardSize, 4)))
@@ -78,15 +92,22 @@ public class SudokuBoard
 		}
 		
 		// Print the closest soultion.
-		/*if(allPlacementsCollection.size()>indicator){
+		if(allPlacementsCollection.size()>indicator){
 			indicator=allPlacementsCollection.size();
 			System.out.println();
 			printBoard();
 			System.out.println();
 			System.out.println("Placed numbers: "+indicator);
 			System.out.println("------------------");
-			
-		}*/
+		}
+		
+	}
+	
+	public void addLocationsToSudokuBoard(int value, int xVal, int yVal)
+	{
+		if(xVal<=(boardSize*boardSize) && yVal<=(boardSize*boardSize)){
+			placeMarker(new MarkerObject(value, xVal, yVal));
+		}
 	}
 	
 	public boolean isSlotEmpty(int xCoord, int yCoord)
@@ -118,13 +139,14 @@ public class SudokuBoard
 			}
 			System.out.println();
 		}
-		System.out.println();
 		
+		System.out.println();
 		for (Iterator<MarkerObject> iterator = allPlacementsCollection.iterator(); iterator.hasNext();)
 		{
 			MarkerObject type = (MarkerObject) iterator.next();
 			System.out.println("Value: "+type.getValue()+" coord: "+type.getxVal()+" , "+type.getyVal());
 		}
+		
 	}
 
 	public void clearPlacedMarkersCollection()
