@@ -1,30 +1,36 @@
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 
+
 /*
- * Las Vegas Algorithm with placement memory
+ * Las Vegas Algorithm with Relocation on Occupancy
+ * The algorithm recalculates coordinates if the randomized coordinate for a marker is occupied on the board
+ * The algorithm starts over if the randomized location of a marker is free but invalid for the specific value
  */
-public class LasVegasWPM
+public class LasVegasRO
 {
 	private SudokuBoard sb;
 	private int boardSize;
 	private MarkerObject marker;
 	private Collection<MarkerObject> markersToPlace;
 	private Collection<MarkerObject> markerCollection;
+	private Date startTime;
+	private Date endTime;
 	
-	public LasVegasWPM(int boardSize, SudokuBoard sb){
+	public LasVegasRO(int boardSize, SudokuBoard sb){
 		this.boardSize = boardSize;
 		this.sb = sb;
 		this.markerCollection = new ArrayList<MarkerObject>();
 	}
 
 	/*
-	 * Tries to place all ones, then all twos and so on in increasing order. If the program tries to place a number
-	 * in an invalid slot, it fails and starts over from the beginning 
+	 * Tries to place all ones, then all twos and so on in increasing order. 
 	 */
 	public void solveSudoku(){
-		
+		startTime = new Date();
 		boolean done = false;
 		boolean restart=false;
 		while(!done)
@@ -33,20 +39,26 @@ public class LasVegasWPM
 			sb.clearArray();
 			for (int valueToPlace = 1; valueToPlace < boardSize*boardSize+1; valueToPlace++)
 			{
-				
-				markersToPlace=createMarkers(valueToPlace);
-				for (Iterator<MarkerObject> mtp = markersToPlace.iterator(); mtp.hasNext();)
+				for (int y = 0; y < boardSize; y++)
 				{
-					MarkerObject marker = (MarkerObject) mtp.next();
-					if(sb.isValidPlacement(marker)){
-						sb.placeMarker(marker);
+					for (int x = 0; x < boardSize; x++)
+					{
+						marker = createMarker(valueToPlace,x,y);
+						if(sb.isValidPlacement(marker)){
+							sb.placeMarker(marker);
+						}
+						else{
+							restart=true;
+							break;
+						}
 					}
-					else{
-						restart=true;
+					if(restart)
+					{
 						break;
 					}
 				}
-				if(restart==true)
+				
+				if(restart)
 				{
 					restart=false;
 					break;
@@ -58,30 +70,23 @@ public class LasVegasWPM
 				System.out.println("DONE");
 			}
 		}
+		endTime = new Date();
+		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
 	}
 	
 	@SuppressWarnings("null")
-	public Collection<MarkerObject> createMarkers(int value){
-		markerCollection.clear();
-		for (int x = 0; x < boardSize; x++)
+	public MarkerObject createMarker(int value, int xVal, int yVal){
+		int xCoordinate = (int) (Math.random()*(boardSize)+xVal*boardSize);
+		int yCoordinate = (int) (Math.random()*(boardSize)+yVal*boardSize);
+		
+		//While the randomized coordinates are occupied within the sudoku board, new coordinates are generated
+		while(!sb.isSlotEmpty(xCoordinate, yCoordinate))
 		{
-			for (int y = 0; y < boardSize; y++)
-			{
-				int xCoordinate = (int) (Math.random()*(boardSize)+x*boardSize);
-				int yCoordinate = (int) (Math.random()*(boardSize)+y*boardSize);
-				
-				//While the randomized coordinates are occupied within the sudoku board, new coordinates are generated
-				while(!sb.isSlotEmpty(xCoordinate, xCoordinate))
-				{
-					xCoordinate = (int) (Math.random()*(boardSize)+x*boardSize);
-					yCoordinate = (int) (Math.random()*(boardSize)+y*boardSize);
-				}
-
-				marker = new MarkerObject(value,xCoordinate,yCoordinate);	
-				markerCollection.add(marker);
-			}
+			xCoordinate = (int) (Math.random()*(boardSize)+xVal*boardSize);
+			yCoordinate = (int) (Math.random()*(boardSize)+yVal*boardSize);
 		}
-		return markerCollection;
+		
+		return new MarkerObject(value,xCoordinate,yCoordinate);	
 	}
 
 }

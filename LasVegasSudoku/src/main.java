@@ -12,12 +12,17 @@ public class main
 	{
 		int boardSize = 2;
 		SudokuBoard sb = new SudokuBoard(boardSize);
-		LasVegasWPM lvwpm = new LasVegasWPM(boardSize, sb);
-		PureLasVegas plv = new PureLasVegas(boardSize, sb);
+		LasVegasRO lvr = new LasVegasRO(boardSize, sb);
+		LasVegasGS lvgs = new LasVegasGS(boardSize, sb);
+		LasVegasSVS lvsvs = new LasVegasSVS(boardSize, sb);
+		LasVegasRORI lvrori = new LasVegasRORI(boardSize, sb);
+		LasVegasRVL lvrvl = new LasVegasRVL(boardSize, sb);
 		
-		//plv.solveSudoku();
-		lvwpm.solveSudoku();
-		
+		//lvgs.solveSudoku();
+		//lvsvs.solveSudoku();
+		//lvr.solveSudoku();
+		//lvrori.solveSudoku();
+		lvrvl.solveSudoku();
 	}
 
 }
