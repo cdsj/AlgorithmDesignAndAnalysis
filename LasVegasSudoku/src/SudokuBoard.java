@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.swing.JTextPane;
+
 
 public class SudokuBoard
 {
@@ -139,14 +141,14 @@ public class SudokuBoard
 			}
 			System.out.println();
 		}
-		
+	/*	
 		System.out.println();
 		for (Iterator<MarkerObject> iterator = allPlacementsCollection.iterator(); iterator.hasNext();)
 		{
 			MarkerObject type = (MarkerObject) iterator.next();
 			System.out.println("Value: "+type.getValue()+" coord: "+type.getxVal()+" , "+type.getyVal());
 		}
-		
+	*/
 	}
 
 	public void clearPlacedMarkersCollection()
