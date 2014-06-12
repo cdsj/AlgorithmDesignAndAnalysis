@@ -22,7 +22,11 @@ public class LasVegasRVL
 		this.sb = sb;
 		this.numberOfRestarts=(long) 0;
 	}
-
+	
+	/*
+	 * Places values down, one quadrant at the time. The algorithm collects all valid locations for a specific value within a quadrant and preformes a random selection
+	 * among these locations. If no valid places are found, the algorithm starts over from the beginning.
+	 */
 	public void solveSudoku(){
 		startTime = new Date();
 		boolean done = false;
@@ -78,6 +82,9 @@ public class LasVegasRVL
 		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 	}
 	
+	/*
+	 * Method is used to add values to the sudoku board before the algorithms are run.
+	 */
 	public void addCoordinates(){
 		sb.addLocationsToSudokuBoard(6, 2, 0);
 		sb.addLocationsToSudokuBoard(9, 4, 0);

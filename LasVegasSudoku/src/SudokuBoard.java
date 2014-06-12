@@ -21,6 +21,9 @@ public class SudokuBoard
 		this.validPlacesCollection = new ArrayList<MarkerObject>();
 	}
 	
+	/*
+	 * Checks if a specific marker fulfills the rules of the sudoku board
+	 */
 	public boolean isValidPlacement(MarkerObject marker){
 		
 		for (Iterator<MarkerObject> markerInterator = allPlacementsCollection.iterator(); markerInterator.hasNext();)
@@ -43,6 +46,10 @@ public class SudokuBoard
 		return true;
 	}
 	
+	/*
+	 * Finds and returns all valid locations for a specific values within a certain quadrant on the sudoku board. 
+	 * A set of markers with valid coordinates is returned
+	 */
 	public Collection<MarkerObject> getValidCoordinatesForQuadrant(int value,int xVal,int yVal,int boardSize){
 		validPlacesCollection.clear();
 		for (int i = xVal*boardSize; i < (boardSize)+xVal*boardSize; i++)
@@ -58,6 +65,9 @@ public class SudokuBoard
 		return validPlacesCollection;
 	}
 	
+	/*
+	 * Checks if a specific value is needed in a specific quadrant
+	 */
 	public boolean isValueNeededInQuadrant(int value,int xVal,int yVal,int boardSize)
 	{
 		for (int i = xVal*boardSize; i < (boardSize)+xVal*boardSize; i++)
@@ -72,6 +82,9 @@ public class SudokuBoard
 		return true;
 	}
 	
+	/*
+	 * Checks if all slots on the sudoku board is filled
+	 */
 	public boolean isBoardFilled()
 	{
 		if(allPlacementsCollection.size()>=(Math.pow(boardSize, 4)))
@@ -84,6 +97,9 @@ public class SudokuBoard
 		}
 	}
 	
+	/*
+	 * Places marker on the sudoku board
+	 */
 	public void placeMarker(MarkerObject marker){
 		allPlacementsCollection.add(marker);
 		
@@ -93,7 +109,7 @@ public class SudokuBoard
 			sudokuBoard[mark.getyVal()][mark.getxVal()]=mark.getValue();
 		}
 		
-		// Print the closest soultion.
+		// Print the closest solution.
 		if(allPlacementsCollection.size()>indicator){
 			indicator=allPlacementsCollection.size();
 			System.out.println();
@@ -104,6 +120,9 @@ public class SudokuBoard
 		}
 	}
 	
+	/*
+	 * Adds preset values to the sudoku board. This method is used if the user would like to have a some values on the sudoku board before running the algorithms.
+	 */
 	public void addLocationsToSudokuBoard(int value, int xVal, int yVal)
 	{
 		if(xVal<=(boardSize*boardSize) && yVal<=(boardSize*boardSize)){
@@ -122,6 +141,9 @@ public class SudokuBoard
 		}
 	}
 	
+	/*
+	 * Prints a representation of the sudoku board within the console
+	 */
 	public void printBoard(){
 		for (int i = 0; i < boardSize*boardSize; i++)
 		{
@@ -151,11 +173,17 @@ public class SudokuBoard
 		*/
 	}
 
+	/*
+	 * Clears all placed markers from the collection containing all placed markers on the sudoku board 
+	 */
 	public void clearPlacedMarkersCollection()
 	{
 		allPlacementsCollection.clear();
 	}
 	
+	/*
+	 * Clears the array used to print out the sudoku board of all values
+	 */
 	public void clearArray(){
 		for (int i = 0; i < boardSize*boardSize; i++)
 		{
