@@ -35,6 +35,7 @@ public class LasVegasRO
 		startTime = new Date();
 		boolean done = false;
 		boolean restart=false;
+		numberOfRestarts=(long) 0;
 		while(!done)
 		{
 			sb.clearPlacedMarkersCollection();
@@ -62,6 +63,7 @@ public class LasVegasRO
 				
 				if(restart)
 				{
+					numberOfRestarts++;
 					restart=false;
 					break;
 				}
