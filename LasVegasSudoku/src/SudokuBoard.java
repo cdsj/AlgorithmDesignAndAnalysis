@@ -102,7 +102,6 @@ public class SudokuBoard
 			System.out.println("Placed numbers: "+indicator);
 			System.out.println("------------------");
 		}
-		
 	}
 	
 	public void addLocationsToSudokuBoard(int value, int xVal, int yVal)
@@ -141,14 +140,15 @@ public class SudokuBoard
 			}
 			System.out.println();
 		}
-	/*	
+		
+		/*
 		System.out.println();
 		for (Iterator<MarkerObject> iterator = allPlacementsCollection.iterator(); iterator.hasNext();)
 		{
 			MarkerObject type = (MarkerObject) iterator.next();
 			System.out.println("Value: "+type.getValue()+" coord: "+type.getxVal()+" , "+type.getyVal());
 		}
-	*/
+		*/
 	}
 
 	public void clearPlacedMarkersCollection()

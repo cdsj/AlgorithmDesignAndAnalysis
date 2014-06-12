@@ -24,7 +24,7 @@ public class SudokuAlgorithmGUI extends JPanel implements ActionListener
 	JLabel jl1,jl2;
 	JTextPane resultPane;
 	String[] algorithms = {"Las Vegas SVS", "Las Vegas GS", "Las Vegas RO", "Las Vegas RORI", "Las Vegas RVL"};
-	Integer[] boardSizes = {2,3};
+	Integer[] boardSizes = {2,3,4};
 	JComboBox<String> algorithmList;
 	JComboBox<Integer> sudokuBoardSize;
 	public SudokuAlgorithmGUI()
@@ -45,9 +45,6 @@ public class SudokuAlgorithmGUI extends JPanel implements ActionListener
 		sudokuBoardSize = new JComboBox<Integer>(boardSizes);
 		sudokuBoardSize.setPreferredSize(new Dimension(180,20));
 		
-		resultPane = new JTextPane();
-		resultPane.setPreferredSize(new Dimension(180,180));
-		
 		jl1 = new JLabel("Select Board Size");
 		jl2 = new JLabel("Select Algorithm");
 		
@@ -56,7 +53,6 @@ public class SudokuAlgorithmGUI extends JPanel implements ActionListener
 		jp1.add(jl2);
 		jp1.add(algorithmList);
 		jp1.add(runButton);
-		jp1.add(resultPane);
 		
 		add(jp1, BorderLayout.WEST);
 		
@@ -108,7 +104,7 @@ public class SudokuAlgorithmGUI extends JPanel implements ActionListener
 	{
 		// Create and set up the window.
 		JFrame frame = new JFrame("Algorithm GUI");
-		frame.setPreferredSize(new Dimension(210, 390));
+		frame.setPreferredSize(new Dimension(210, 180));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Create and set up the content pane.

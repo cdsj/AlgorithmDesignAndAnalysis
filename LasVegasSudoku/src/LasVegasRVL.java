@@ -61,12 +61,6 @@ public class LasVegasRVL
 				if(restart)
 				{
 					numberOfRestarts++;
-					/*
-					if(numberOfRestarts%100000==0)
-					{
-						system.out.println("Number of Restarts: "+numberOfRestarts);
-					}
-					*/
 					restart=false;
 					break;
 				}
@@ -80,8 +74,8 @@ public class LasVegasRVL
 		sb.printBoard();
 		System.out.println("---------------------");
 		System.out.println("DONE");
-		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
+		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 	}
 	
 	public void addCoordinates(){

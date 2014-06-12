@@ -69,10 +69,10 @@ public class LasVegasRO
 			if(sb.isBoardFilled())
 			{
 				done=true;
-				System.out.println("DONE");
 			}
 		}
 		endTime = new Date();
+		System.out.println("DONE");
 		System.out.println("Total Run Time: "+(endTime.getTime()-startTime.getTime())+" ms");
 		System.out.println("Total Number of Restarts: "+numberOfRestarts);
 	}
